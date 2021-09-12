@@ -1,0 +1,19 @@
+{
+  "name": "appcenter",
+  "version": "1.0.0",
+  "description": "test",
+  "main": "index.js",
+  "dependencies": {
+    "@types/node": "^16.9.1",
+    "node-fetch": "^2.6.1",
+    "typescript": "^4.4.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "build": "npx tsc",
+    "start": "npm run build && node dist/index.js",
+    "test": "test"
+  },
+  "author": "",
+  "license": "ISC"
+}
