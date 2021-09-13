@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 
 import * as fetch from 'node-fetch';
-require('dotenv').config();
+import dotenv from 'dotenv';
+dotenv.config()
 
 const USERNAME = 'smirnovanv';
 const PROJECT = 'AppCenterTest-Android';
@@ -23,7 +24,7 @@ async function getBranches () {
     } else {
         throw new Error('Could not get branches');
     }
-};
+}
 
 async function buildBranches () {
     const branches = await getBranches();
