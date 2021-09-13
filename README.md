@@ -3,11 +3,16 @@ AppCenter project does the following using App Center API(https://openapi.appcen
 - Print the following information to console output
 < branch name > build < completed/failed > in 125 seconds. Link to build logs: < link >
 
-Installation
-npm install
+INSTALLATION
+- npm install
+- copy  the content of .env.template file into .env file
+- install the script globally: npm install -g .
 
-Building the app
-npm run build
+BUILD THE APP
+- npm run build
 
-Running the app
-npm run start
+RUN THE APP
+- get-builds
+
+UNINSTALLING
+npm uninstall -g appcenter-cli
