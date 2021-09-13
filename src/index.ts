@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 import * as fetch from 'node-fetch';
+require('dotenv').config();
 
 const USERNAME = 'smirnovanv';
 const PROJECT = 'AppCenterTest-Android';
