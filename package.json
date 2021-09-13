@@ -1,20 +1,25 @@
 {
-  "name": "appcenter",
+  "name": "appcenter-cli",
   "version": "1.0.0",
   "description": "test",
-  "main": "index.js",
+  "main": "bin/dist/index.js",
   "dependencies": {
-    "@types/node": "^16.9.1",
     "dotenv": "^10.0.0",
     "node-fetch": "^2.6.1",
     "typescript": "^4.4.3"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "@types/node": "^16.9.1"
+  },
   "scripts": {
     "build": "npx tsc",
-    "start": "npm run build && node dist/index.js",
+    "start": "npm run build && node bin/dist/index.js",
     "test": "test"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "bin": {
+    "get-builds": "./bin/dist/index.js"
+  },
+  "preferGlobal": true
 }
