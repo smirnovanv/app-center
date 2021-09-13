@@ -1,15 +1,20 @@
 #!/usr/bin/env node
 
 import * as fetch from 'node-fetch';
+require('dotenv').config();
 
 const USERNAME = 'smirnovanv';
 const PROJECT = 'AppCenterTest-Android';
-const TOKEN = 'eabf22e7562cc972f803d85756e0dc5d20d7e765';
+const DELAY = 100000;
+const buildStatus = {
+    notStarted: 'notStarted',
+    inProgress: 'inProgress'
+};
 
 async function getBranches () {
     const response = await fetch(`https://api.appcenter.ms/v0.1/apps/${USERNAME}/${PROJECT}/branches`, {
         headers: {
-            'X-API-Token': TOKEN
+            'X-API-Token': process.env.TOKEN
         },
     });
     if (response.ok) {
@@ -30,7 +35,7 @@ async function buildBranches () {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'X-API-Token': TOKEN,
+                'X-API-Token': process.env.TOKEN,
             },
             body: JSON.stringify({ sourceVersion: version, debug: false })
         })
@@ -39,7 +44,7 @@ async function buildBranches () {
 
 async function checkBuilds () {
     const branches = await getBranches();
-    const branchStatus = branches.every((branch) => branch.lastBuild.status !== 'notStarted' && branch.lastBuild.status !== 'inProgress');
+    const branchStatus = branches.every((branch) => branch.lastBuild.status !== buildStatus.notStarted && branch.lastBuild.status !== buildStatus.inProgress);
 
     if (branchStatus) {
         for (let i = 0; i < branches.length; i++) {
@@ -52,7 +57,7 @@ async function checkBuilds () {
 
              fetch(`https://api.appcenter.ms/v0.1/apps/${USERNAME}/${PROJECT}/builds/${id}/downloads/logs`, {
               headers: {
-                'X-API-Token': TOKEN
+                'X-API-Token': process.env.TOKEN
               },
              })
              .then((response) => response.json())
@@ -65,13 +70,13 @@ async function checkBuilds () {
     }
 
     console.log('Building branches...');
-    setTimeout(checkBuilds, 100000);
+    setTimeout(checkBuilds, DELAY);
 }
 
 async function buildAndCheck() {
     try {
         buildBranches();
-        setTimeout(checkBuilds, 100000);
+        setTimeout(checkBuilds, DELAY);
     } catch {
         console.log('error')
     }
