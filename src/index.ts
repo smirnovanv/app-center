@@ -5,6 +5,11 @@ import * as fetch from 'node-fetch';
 const USERNAME = 'smirnovanv';
 const PROJECT = 'AppCenterTest-Android';
 const TOKEN = 'eabf22e7562cc972f803d85756e0dc5d20d7e765';
+const DELAY = 100000;
+const buildStatus = {
+    notStarted: 'notStarted',
+    inProgress: 'inProgress'
+};
 
 async function getBranches () {
     const response = await fetch(`https://api.appcenter.ms/v0.1/apps/${USERNAME}/${PROJECT}/branches`, {
@@ -39,7 +44,7 @@ async function buildBranches () {
 
 async function checkBuilds () {
     const branches = await getBranches();
-    const branchStatus = branches.every((branch) => branch.lastBuild.status !== 'notStarted' && branch.lastBuild.status !== 'inProgress');
+    const branchStatus = branches.every((branch) => branch.lastBuild.status !== buildStatus.notStarted && branch.lastBuild.status !== buildStatus.inProgress);
 
     if (branchStatus) {
         for (let i = 0; i < branches.length; i++) {
@@ -65,13 +70,13 @@ async function checkBuilds () {
     }
 
     console.log('Building branches...');
-    setTimeout(checkBuilds, 100000);
+    setTimeout(checkBuilds, DELAY);
 }
 
 async function buildAndCheck() {
     try {
         buildBranches();
-        setTimeout(checkBuilds, 100000);
+        setTimeout(checkBuilds, DELAY);
     } catch {
         console.log('error')
     }
