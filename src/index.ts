@@ -84,3 +84,6 @@ async function buildAndCheck() {
 }
 
 buildAndCheck();
+
+module.exports = getBranches;
+module.exports = buildAndCheck;
