@@ -4,7 +4,6 @@ import * as fetch from 'node-fetch';
 
 const USERNAME = 'smirnovanv';
 const PROJECT = 'AppCenterTest-Android';
-const TOKEN = 'eabf22e7562cc972f803d85756e0dc5d20d7e765';
 const DELAY = 100000;
 const buildStatus = {
     notStarted: 'notStarted',
@@ -14,7 +13,7 @@ const buildStatus = {
 async function getBranches () {
     const response = await fetch(`https://api.appcenter.ms/v0.1/apps/${USERNAME}/${PROJECT}/branches`, {
         headers: {
-            'X-API-Token': TOKEN
+            'X-API-Token': process.env.TOKEN
         },
     });
     if (response.ok) {
@@ -35,7 +34,7 @@ async function buildBranches () {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'X-API-Token': TOKEN,
+                'X-API-Token': process.env.TOKEN,
             },
             body: JSON.stringify({ sourceVersion: version, debug: false })
         })
@@ -57,7 +56,7 @@ async function checkBuilds () {
 
              fetch(`https://api.appcenter.ms/v0.1/apps/${USERNAME}/${PROJECT}/builds/${id}/downloads/logs`, {
               headers: {
-                'X-API-Token': TOKEN
+                'X-API-Token': process.env.TOKEN
               },
              })
              .then((response) => response.json())
