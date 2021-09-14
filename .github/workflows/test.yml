@@ -13,7 +13,7 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - run: npm ci
       - run: npm run lint
-  build:
+  build & test:
     needs: lint
     runs-on: ubuntu-latest
     steps:
@@ -23,8 +23,4 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - run: npm ci
       - run: npm run build
-  test:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
       - run: npm run test
