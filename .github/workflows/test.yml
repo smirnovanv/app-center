@@ -17,6 +17,7 @@ jobs:
     needs: lint
     runs-on: ubuntu-latest
     steps:
+      - run: cd app-center
       - run: npm run build
   test:
     needs: build
